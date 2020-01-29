@@ -1,0 +1,74 @@
+/*	-WHAT IS THIS?-
+	This file adds optional material to "MPMB's Character Record Sheet" found at https://flapkan.com/mpmb/charsheets
+	Import this file using the "Add Extra Materials" bookmark.
+	-KEEP IN MIND-
+	It is recommended to enter the code in a fresh sheet before adding any other information (i.e. before making your character with it).
+*/
+
+/*	-INFORMATION-
+	Subject:	Subclass
+	Effect:		This script adds a subclass for the Cleric, called "Fate Domain"
+				This is taken from the DMs Guild website (https://www.dmsguild.com/product/194789/)
+				This subclass is made by Cody Faulk
+	Code by:	MorePurpleMoreBetter
+	Date:		2017-11-29 (sheet v12.999)
+	Please support the creator of this content (Cody Faulk) and download his material from the DMs Guild website: https://www.dmsguild.com/browse.php?author=Cody%20Faulk
+*/
+
+var iFileName = "Cleric - Beauty Domain [Cody Faulk's work, transcribed by MPMB].js";
+RequiredSheetVersion(12.999);
+
+SourceList["CF:FD"] = {
+	name : "Cody Faulk: Fate Domain",
+	abbreviation : "CF:FD",
+	group : "Dungeon Masters Guild",
+	url : "https://www.dmsguild.com/product/194789/",
+	date : "2016/12/08"
+};
+
+AddSubClass("cleric", "beauty domain", {
+	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*beauty).*$/i,
+	subname : "Beauty Domain",
+	source : ["CF:FD", 1],
+	spellcastingExtra : ["charm person", "heroism", "enthrall", "suggestion", "beacon of hope", "hypnotic pattern", "charm monster", "compulsion", "dominate person", "hold monster"],
+	features : {
+		"subclassfeature1" : {
+			name : "Beauty's Refuge",
+			source : ["CF:FD", 0],
+			minlevel : 1,
+			description : "\n   " + "After a short or long rest, I can give up to 12 allies temp HP equal to my Charisma Modifier.",					}
+		"subclassfeature1" : {
+			name : "Rebuke the Defiler",
+			source : ["CF:FD", 0],
+			minlevel : 1,
+			description : "\n   " + "As a reaction, I can force a creature who inflicts damage within 30 ft of me to make a Wisdom saving throw. On a failure they take psychic damage equal to the amount inflicted, on a success, they take half.",					}
+		"subclassfeature2" : {
+			name : "Channel Divinity: Beauty's Truce",
+			source : ["CF:FD", 0],
+			minlevel : 2,
+			description : "\n   " + "As an action, I force all creatures within 100 ft of me to make a Charisma saving throw. If they fail, they are charmed by me and those who also failed for one hour.",
+			action : ["action", ""]
+		},
+		"subclassfeature6" : {
+			name : "Superior Refuge",
+			source : ["CF:FD", 0],
+			minlevel : 6,
+			description : "\n   " + "Add an additonal 5 temp HP to Beauty's Refuge.",
+		},
+		"subclassfeature8" : {
+			name : "Potent Spellcasting",
+			source : ["CF:FD", 0],
+			minlevel : 8,
+			description : "\n   " + "I add my Wisdom modifier to the damage I deal with my cleric cantrips",
+			calcChanges : {
+				atkCalc : ["if (classes.known.cleric && classes.known.cleric.level > 7 && thisWeapon[4].indexOf('cleric') !== -1 && thisWeapon[3] && SpellsList[thisWeapon[3]].level === 0) { output.extraDmg += What('Wis Mod'); }; ", "My cleric cantrips get my Wisdom modifier added to their damage."]
+			}
+		},
+		"subclassfeature17" : {
+			name : "Soul of Beauty",
+			source : ["CF:FD", 0],
+			minlevel : 17,
+			description : "\n   " + "As a reaction, I can impose a penalty on a creature's attack or saving throws equal to my Charisma modifier, which lasts until the end of the current turn."
+		}
+	}
+});
